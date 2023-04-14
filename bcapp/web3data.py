@@ -207,14 +207,14 @@ def compile():
     railway=w3.eth.contract(abi=a,bytecode=b)
 def cons():
     global tx_recipt
-    tx=railway.constructor().buildTransaction(
+    tx=railway.constructor().build_transaction(
     {
-        'from':"0x51dE4Dea217B52D88aB41652C0A53F9D39e89524",
-        'nonce':w3.eth.getTransactionCount("0x51dE4Dea217B52D88aB41652C0A53F9D39e89524"),
+        'from':"0x776ec72f4A4F576E94732892dd03346254Ff9A87",
+        'nonce':w3.eth.get_transaction_count("0x776ec72f4A4F576E94732892dd03346254Ff9A87"),
         'gasPrice':w3.eth.gas_price
     }
     )
-    p="0x992963ae8e4c108b5afdca2d02b6f7db8c899a4ec56146893d817a5bb6564760"
+    p="0x0a26f661a093595e709fe5487663f6cbc5a419a249effad9d94359bb606d71f9"
     signed_tx=w3.eth.account.sign_transaction(tx,private_key=p)
     tx_hash=w3.eth.send_raw_transaction(signed_tx.rawTransaction)
     tx_recipt=w3.eth.wait_for_transaction_receipt(tx_hash)
@@ -225,20 +225,20 @@ def create_inst():
     print(a)
     con_instance=w3.eth.contract(address=tx_recipt.contractAddress,abi=a)
 def book_ticket(address,private,c,no):
-    tx=con_instance.functions.book_tickets(c,no).buildTransaction(
+    tx=con_instance.functions.book_tickets(c,no).build_transaction(
     {
         'from':address,
-        'nonce':w3.eth.getTransactionCount(address),
+        'nonce':w3.eth.get_transaction_count(address),
         'gasPrice':w3.eth.gas_price
     }
     )
     signed_tx=w3.eth.account.sign_transaction(tx,private_key=private)
     tx_hash=w3.eth.send_raw_transaction(signed_tx.rawTransaction)
 def canc_ticket(address,private,id,c):
-    tx=con_instance.functions.cancel_ticket(id,c).buildTransaction(
+    tx=con_instance.functions.cancel_ticket(id,c).build_transaction(
     {
         'from':address,
-        'nonce':w3.eth.getTransactionCount(address),
+        'nonce':w3.eth.get_transaction_count(address),
         'gasPrice':w3.eth.gas_price
     }
     )
@@ -248,10 +248,10 @@ def view_tavail(c,n):
     output=con_instance.functions.availablity(c,n).call()
     return output
 def register_user(address,p_key):
-    tx=con_instance.functions.reg_user().buildTransaction(
+    tx=con_instance.functions.reg_user().build_transaction(
     {
         'from':address,
-        'nonce':w3.eth.getTransactionCount(address),
+        'nonce':w3.eth.get_transaction_count(address),
         'gasPrice':w3.eth.gas_price
     }
     )
