@@ -205,25 +205,25 @@ def compile():
     a=contract_interface['abi']
     b=contract_interface['bin']
     railway=w3.eth.contract(abi=a,bytecode=b)
-def cons():
-    global tx_recipt
-    tx=railway.constructor().build_transaction(
-    {
-        'from':"0x776ec72f4A4F576E94732892dd03346254Ff9A87",
-        'nonce':w3.eth.get_transaction_count("0x776ec72f4A4F576E94732892dd03346254Ff9A87"),
-        'gasPrice':w3.eth.gas_price
-    }
-    )
-    p="0x0a26f661a093595e709fe5487663f6cbc5a419a249effad9d94359bb606d71f9"
-    signed_tx=w3.eth.account.sign_transaction(tx,private_key=p)
-    tx_hash=w3.eth.send_raw_transaction(signed_tx.rawTransaction)
-    tx_recipt=w3.eth.wait_for_transaction_receipt(tx_hash)
+# def cons():
+#     global tx_recipt
+#     tx=railway.constructor().build_transaction(
+#     {
+#         'from':"0x84ac4b29B46eA99549d3cF7490Bb48F0F33610a4",
+#         'nonce':w3.eth.get_transaction_count("0x84ac4b29B46eA99549d3cF7490Bb48F0F33610a4"),
+#         'gasPrice':w3.eth.gas_price
+#     }
+#     )
+#     p="0xc42a0b0352d53ad739745aec33992bfcd86e1893cfe82438755643d739d5085b"
+#     signed_tx=w3.eth.account.sign_transaction(tx,private_key=p)
+#     tx_hash=w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+#     tx_recipt=w3.eth.wait_for_transaction_receipt(tx_hash)
 def create_inst():
     global con_instance
     global tx_recipt
-    print(tx_recipt.contractAddress)
+    contractAddress="0x4A6c85AcC60F5B014939eB59080540c0FE2245cC"
     print(a)
-    con_instance=w3.eth.contract(address=tx_recipt.contractAddress,abi=a)
+    con_instance=w3.eth.contract(address=contractAddress,abi=a)
 def book_ticket(address,private,c,no):
     tx=con_instance.functions.book_tickets(c,no).build_transaction(
     {
@@ -279,7 +279,6 @@ def log_canceled_tc(i):
     return res
 def call_me_first():
     compile()
-    cons()
     create_inst()
 def checkavail(cno):
     l=con_instance.functions.checkav(cno).call()
